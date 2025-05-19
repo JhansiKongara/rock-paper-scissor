@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ <div class="container">
+  <div class="rock-paper-scissors-mainpage">
+    <div class="header-title">
+      <img src="./images/logo.svg" alt="">
+    </div>
+    <div class="header-score">
+      <div class="score-title">SCORE</div>
+      <div class="score-value" id="score">0</div>
+    </div>
+  </div>
+  <div class="icon-container" id="paper">
+    
+    <span class="paper-icon backgroundset icon1 paper-border-color " onclick="papericon({url:'./images/icon-paper.svg',className:'paper-border-color',item:'paper'})" id="paper" >
+      <img src="./images/icon-paper.svg" alt="">
+    </span>
+    <span class="scissor-icon backgroundset icon2 scissor-border-color" onclick="papericon({url:'./images/icon-scissors.svg',className:'scissor-border-color',item:'scissor'})">
+      <img src="./images/icon-scissors.svg" alt="">
+    </span>
+    <span class="rock-icon backgroundset icon3 rock-border-color" onclick="papericon({url:'./images/icon-rock.svg',className:'rock-border-color',item:'rock'})">
+      <img src="./images/icon-rock.svg" alt="">
+    </span>
+  </div>
+  
+  <div class="game-board-container" id="game-board">
+    <div class="you-picked-container">
+      <div class="you-picked-container-title">
+        <h2 class="you-paper-title">YOU PICKED</h2>
+       </div>
+      <div class="" id="selected-option">
+        <img src="./images/icon-paper.svg" alt="">
+      </div>
+    </div>
+    <div class="score-board-container" id="play-again-btn">
+      <h2 class="score-board-title" id="declare">YOU WIN</h2>
+      <button type="button" class="score-button" onclick="goback()" >PLAY AGAIN</button>
+    </div>
+    <div class="house-picked-container">
+      <div class="house-picked-container-title">
+        <h2 class="houese-rock-title">THE HOUSE PICKED</h2>
+      </div>
+      <div class="house-picked-container-challenge rock backgroundset" id="house-picked-container">
+        <img src="./images/icon-rock.svg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="button-container">
+    <button type="button">RULES</button>
+  </div>
+  <!-- Popup Modal -->
+  <div class="popup-overlay" id="rulesModal">
+    <div class="popup-content">
+      <div class="content">
+      <h2>RULES</h2>
+      <div class="spacer"></div>
+      <span class="close-btn" onclick="closeModal()">×</span>
+      </div>
+      
+      <img src="./images/image-rules.svg" alt="Rules Image" class="rules-image">
+    </div>
+  </div>
+ </div>
+  
+<script>
+  const scoreElement=document.getElementById("score")
+  let score=parseInt(sessionStorage.getItem('score')) || 0;
+ scoreElement.textContent=score
+  const modal = document.getElementById("rulesModal");
+  const button = document.querySelector(".button-container button");
+
+  button.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  // Optional: close when clicking outside the box
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+ document.getElementById("game-board").style.display="none"
+ const options = [
+  { name: "rock", class: "rock-border-color", url: "images/icon-rock.svg"},
+  { name: "paper", class: "paper-border-color", url: "images/icon-paper.svg" },
+  { name: "scissor", class: "scissor-border-color", url: "images/icon-scissors.svg" }
+];
+let selectedoption=document.getElementById("selected-option")
+let houseselected=document.getElementById("house-picked-container")
+  function papericon({url,className,item}){
+    document.getElementById("paper").style.display="none"
+    document.getElementById("game-board").style.display="flex"
+  
+  document.getElementById("selected-option").className = "you-picked-container-challenge paper backgroundset"
+  document.getElementById("selected-option").classList.add(className)
+  document.getElementById("selected-option").innerHTML = `<img src="${url}" alt="">`;
+  const playAgainBtn = document.getElementById("play-again-btn");
+  let houseselected;
+  const interval=setInterval(()=>{
+   
+    const randomChoice = options[Math.floor(Math.random() * options.length)];
+    // console.log(randomChoice)
+     document.getElementById("house-picked-container").className = "house-picked-container-challenge rock backgroundset"
+    document.getElementById("house-picked-container").classList.add(randomChoice.class)
+    document.getElementById("house-picked-container").innerHTML=`<img src="${randomChoice.url}" alt="">`;
+    playAgainBtn.style.display = "none";
+    houseselected=randomChoice.name;
+  },150)
+ setTimeout(()=>{
+  clearInterval(interval)  
+  if(item===houseselected){
+  document.getElementById("declare").innerHTML="IT'S TIE";
+}else if((item==="scissor" && houseselected==="paper")||
+(item==="paper" && houseselected==="rock") ||
+(item==="rock" && houseselected==="scissor"))
+{   
+  document.getElementById("declare").innerHTML="YOU WIN";
+  document.getElementById("selected-option").classList.add("winner")
+  document.getElementById("house-picked-container").classList.remove("winner")
+  score+=1
+  scoreElement.textContent=score
+  sessionStorage.setItem("score",String(score))
+}else{
+  document.getElementById("declare").innerHTML="YOU LOSE";
+  document.getElementById("selected-option").classList.remove("winner")
+  document.getElementById("house-picked-container").classList.add("winner")
+  score-=1
+  scoreElement.textContent=score
+  sessionStorage.setItem("score",String(score))
+} 
+
+  playAgainBtn.style.display = "flex";
+
+ },1500)
+  }
+function goback(){
+  document.getElementById("paper").style.display="flex"
+  document.getElementById("game-board").style.display="none"
+}
+
+ 
+</script>
+
+</body>
+</html>

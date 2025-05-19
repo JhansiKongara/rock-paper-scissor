@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vertical Split</title>
+    <style>
+        html,
+        body {
+            background-color: blue;
+            height: 100%;
+            margin: 0px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .head {
+            width: 70%;
+            height: 100px;
+            background-color: red;
+            margin: 0px auto;
+        }
+
+        .gameb {
+            height: 500px;
+            background-color: white;
+            width: 500px;
+            margin: 100px auto;
+        }
+
+        .spacer {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="head"></div>
+        <div class="gameb"></div>
+        <div class="spacer"></div>
+        <button>RULES</button>
+    </div>
+
+    <script>
+        // const choices = ["rock", "paper", "scissors"];
+// let score = 10; // initial score
+// const scoreDisplay = document.querySelector(".score-value"); 
+
+// Add click event to all icons
+// document.querySelectorAll(".icon-container span").forEach(icon => {
+//   console.log(icon)
+//   icon.addEventListener("click", (event) => {
+//     console.log(event)
+//     const userChoice = event.currentTarget.dataset.value;
+//     // console.log(userChoice)
+//     const houseChoice = choices[Math.floor(Math.random() * choices.length)];
+//     // console.log("You:", userChoice, "House:", houseChoice, );
+
+//     // Show picked items
+//     document.querySelector(".you-picked-container-challenge img").src = `images/icon-${userChoice}.svg`;
+//     document.querySelector(".house-picked-container-challenge img").src = `images/icon-${houseChoice}.svg`;
+
+//     // Update class for colors (optional)
+//     document.querySelector(".you-picked-container-challenge").className = `you-picked-container-challenge ${userChoice} backgroundset`;
+//     document.querySelector(".house-picked-container-challenge").className = `house-picked-container-challenge ${houseChoice} backgroundset`;
+
+//     // Determine result
+//     const resultText = getResult(userChoice, houseChoice);
+   
+
+//     document.querySelector(".score-board-title").textContent = resultText;
+
+//     // Update score
+//     if (resultText === "YOU WIN") {
+//       score++;
+//     } else if (resultText === "YOU LOSE") {
+//       score = Math.max(0, score - 1);
+//     }
+//     scoreDisplay.textContent = score;
+
+//     // Show result screen
+//     document.getElementById("main-game").style.display = "flex";
+//     document.getElementById("game-board").style.display = "flex";
+//     document.getElementById("paper").style.display="none";
+//   });
+  
+// });
+
+// function getResult(user, house) {
+//   if (user === house) return "IT'S A TIE";
+//   if (
+//     (user === "rock" && house === "scissors") ||
+//     (user === "scissors" && house === "paper") ||
+//     (user === "paper" && house === "rock")
+//   ) {
+//     return "YOU WIN";
+//   }
+//   return "YOU LOSE";
+// }
+
+
+// // Replay button
+// document.querySelector(".score-button").addEventListener("click", () => {
+//   document.getElementById("main-game").style.display = "flex";
+//   document.getElementById("game-board").style.display = "none";
+//   document.getElementById("paper").style.display="flex";
+// });
+
+    </script>
+</body>
+</html>
